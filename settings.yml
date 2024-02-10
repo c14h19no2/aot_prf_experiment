@@ -16,17 +16,17 @@ eyetracker:
     calibration_type: HV9
 
 stimuli:
-  instruction_text: '请一直注视屏幕中央，这是最重要的'
+  instruction_text: 'Press a button whenever the fixation mark changes luminance'
   pretrigger_text: '"t" 将开始实验。 报告固定十字的所有变化'
-  fix_radius: 8
-  fix_color: 0.75
+  fix_radius: 3
+  fix_color: 0.25
   inner_fix_linewidth: 4
   outer_fix_linewidth: 1
   stim_size_pixels: 1080 # the full height of a HD screen, likely to be used
   aperture_radius: 1 # defined in fraction of stimulus radius
   refresh_rate: 120 # this is just a suggestion; the code doesn't depend on it
   bg_stim_h5file: 'toon_stims_512.h5'
-  bg_stim_url: 'https://figshare.com/ndownloader/files/31165414'
+  bg_stim_url: 'https://figshare.com/ndownloader/files/44497559'
   bg_stim_refresh_time: 0.0666666666667 # in s, 15Hz
   bar_refresh_times: [0.4] # in s, should be acquisition TR for a standard stepping bar design, Dumoulin-style
   bar_directions: [-1, 0, 225, -1, 90, 315, -1, 180, 45, -1, 270, 135, -1]
