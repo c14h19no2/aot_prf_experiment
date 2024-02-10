@@ -1,0 +1,117 @@
+design:
+    bar_duration: 9.0
+    blank_duration: 2.0
+    end_duration: 1.0
+    exponential_ifi_mean: 0.25
+    gaussian_ifi_sd: 0.125
+    minimal_ifi_duration: 0.5
+    offset_ifi_duration: 1.0
+    start_duration: 1.0
+    ttl_trigger_bar: 2
+    ttl_trigger_blank: 3
+    ttl_trigger_delay: 0.001
+    ttl_trigger_start: 5
+eyetracker:
+    address: 100.1.1.1
+    dot_size: 0.1
+    options:
+        active_eye: left
+        automatic_calibration_pacing: 1000
+        autothreshold_click: true
+        autothreshold_repeat: true
+        binocular_enabled: false
+        calibration_type: HV9
+        enable_automatic_calibration: true
+        enable_camera_position_detect: true
+        enable_search_limits: true
+        file_event_filter: LEFT,RIGHT,FIXATION,SACCADE,BLINK,MESSAGE,BUTTON,INPUT
+        heuristic_filter: 2
+        link_event_filter: LEFT,RIGHT,FIXATION,SACCADE,BLINK,BUTTON
+        link_sample_data: LEFT,RIGHT,GAZE,GAZERES,AREA,STATUS,HTARGET
+        pupil_size_diameter: true
+        sample_rate: 1000
+        track_search_limits: true
+        x_gaze_constraint: AUTO
+        y_gaze_constraint: AUTO
+monitor:
+    distance: 225
+    gamma: 1
+    name: 7T
+    verbose: true
+    width: 69
+mouse:
+    visible: false
+mri:
+    TA: 2.0
+    TR: 2.0
+    simulate: false
+    skip: 0
+    sound: false
+    sync: t
+    volumes: 10
+preferences:
+    general:
+        audioLib: sounddevice
+        units: deg
+stimuli:
+    aperture_radius: 1
+    bar_blank_duration: 0.06666666666667
+    bar_blank_interval: 0.333333333333
+    bar_directions:
+    - -1
+    - 0
+    - 225
+    - -1
+    - 90
+    - 315
+    - -1
+    - 180
+    - 45
+    - -1
+    - 270
+    - 135
+    - -1
+    bar_refresh_times:
+    - 0.4
+    bar_widths:
+    - 0.1
+    - 0.2
+    - 0.3
+    bg_stim_h5file: toon_stims_512.h5
+    bg_stim_refresh_time: 0.0666666666667
+    bg_stim_url: https://figshare.com/ndownloader/files/31165414
+    fix_color: 0.75
+    fix_radius: 8
+    inner_fix_linewidth: 4
+    instruction_text: "\u8BF7\u4E00\u76F4\u6CE8\u89C6\u5C4F\u5E55\u4E2D\u592E\uFF0C\
+        \u8FD9\u662F\u6700\u91CD\u8981\u7684"
+    outer_fix_linewidth: 1
+    pretrigger_text: "\"t\" \u5C06\u5F00\u59CB\u5B9E\u9A8C\u3002 \u62A5\u544A\u56FA\
+        \u5B9A\u5341\u5B57\u7684\u6240\u6709\u53D8\u5316"
+    refresh_rate: 120
+    stim_size_pixels: 1080
+various:
+    buttons:
+    - b
+    - j
+    - k
+    - l
+    - semicolon
+    text_height: 40
+    text_position_x: 0
+    text_position_y: 100
+    text_width: 300
+window:
+    color:
+    - 0
+    - 0
+    - 0
+    fullscr: true
+    pos:
+    - 0
+    - 0
+    size:
+    - 1920
+    - 1080
+    units: pix
+    waitBlanking: true
