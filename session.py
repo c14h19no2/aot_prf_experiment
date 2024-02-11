@@ -121,7 +121,7 @@ class PRFBarPassSession(PylinkEyetrackerSession):
         self.fixation = FixationBullsEye(
             win=self.win,
             circle_radius=self.settings["stimuli"].get("stim_size_pixels"),
-            color=(0.5, 0.5, 0.5, 1),
+            color=(0.5, 0.5, 0.5),
             **{"lineWidth": self.settings["stimuli"].get("outer_fix_linewidth")},
         )
 
@@ -135,7 +135,7 @@ class PRFBarPassSession(PylinkEyetrackerSession):
         self.report_fixation_barrier = FixationLines(
             win=self.win,
             circle_radius=self.settings["stimuli"].get("fix_radius") * 2,
-            color=(0, 0, 0, 1),
+            color=(0, 0, 0),
             **{"lineWidth": self.settings["stimuli"].get("fix_barrier_linewidth")},
         )
 

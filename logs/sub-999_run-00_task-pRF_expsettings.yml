@@ -1,12 +1,12 @@
 design:
-    bar_duration: 30.0
-    blank_duration: 1.0
-    end_duration: 1.0
+    bar_duration: 24.0
+    blank_duration: 16.0
+    end_duration: 4.0
     exponential_ifi_mean: 2.5
     gaussian_ifi_sd: 0
     minimal_ifi_duration: 2.0
     offset_ifi_duration: 2.0
-    start_duration: 1.0
+    start_duration: 4.0
     ttl_trigger_bar: 2
     ttl_trigger_blank: 3
     ttl_trigger_delay: 0.001
@@ -59,17 +59,18 @@ stimuli:
     bar_blank_interval: 0.1333333333333
     bar_directions:
     - -1
-    - 0
     - 225
-    - -1
-    - 90
     - 315
     - -1
-    - 180
+    - 45
+    - 135
+    - -1
+    - -1
+    - 135
     - 45
     - -1
-    - 270
-    - 135
+    - 315
+    - 225
     - -1
     bar_refresh_times:
     - 0.0666666666667
@@ -78,14 +79,14 @@ stimuli:
     bg_stim_h5file: toon_stims_512.h5
     bg_stim_refresh_time: 0.0666666666667
     bg_stim_url: https://figshare.com/ndownloader/files/44497559
-    fix_barrier_linewidth: 8
+    fix_barrier_linewidth: 12
     fix_color:
     - 1
     - -1
-    - 0
+    - 1
     fix_radius: 3
     inner_fix_linewidth: 2
-    instruction_text: Press a button whenever the fixation mark changes luminance
+    instruction_text: Press a button whenever the fixation mark changes color
     outer_fix_linewidth: 1
     pretrigger_text: ''
     refresh_rate: 120

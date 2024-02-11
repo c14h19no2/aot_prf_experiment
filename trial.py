@@ -160,7 +160,7 @@ class BarPassTrial(Trial):
             ):
                 self.session.last_fix_event = self.session.last_fix_event + 1
                 self.session.report_fixation.setColor(
-                    np.array([-1, -1, -1]) * self.session.report_fixation.color
+                    np.ones((1, 3)) * -1 * self.session.report_fixation.color
                 )
 
             # identify stimulus object, and decide whether to draw
@@ -230,9 +230,10 @@ class EmptyBarPassTrial(Trial):
         ):
             self.session.last_fix_event = self.session.last_fix_event + 1
             self.session.report_fixation.setColor(
-                -1 * self.session.report_fixation.color
+                np.ones((1, 3)) * -1 * self.session.report_fixation.color
             )
 
+        self.session.report_fixation_barrier.draw()
         self.session.fixation.draw()
         self.session.report_fixation.draw()
         self.session.win.flip()
@@ -311,9 +312,10 @@ class InstructionTrial(Trial):
         self.keys = keys
 
     def draw(self):
+
+        self.session.report_fixation_barrier.draw()
         self.session.fixation.draw()
         self.session.report_fixation.draw()
-
         self.text.draw()
         self.session.win.flip()
 
@@ -350,14 +352,6 @@ class DummyWaiterTrial(InstructionTrial):
             draw_each_frame=draw_each_frame,
             **kwargs
         )
-
-    def draw(self):
-        self.session.fixation.draw()
-        if self.phase == 0:
-            self.text.draw()
-        else:
-            self.session.report_fixation.draw()
-        self.session.win.flip()
 
     def get_events(self):
         events = Trial.get_events(self)
