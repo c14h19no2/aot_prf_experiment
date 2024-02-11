@@ -1,11 +1,11 @@
 design:
-    bar_duration: 9.0
-    blank_duration: 2.0
+    bar_duration: 30.0
+    blank_duration: 1.0
     end_duration: 1.0
-    exponential_ifi_mean: 0.25
-    gaussian_ifi_sd: 0.125
-    minimal_ifi_duration: 0.5
-    offset_ifi_duration: 1.0
+    exponential_ifi_mean: 2.5
+    gaussian_ifi_sd: 0
+    minimal_ifi_duration: 2.0
+    offset_ifi_duration: 2.0
     start_duration: 1.0
     ttl_trigger_bar: 2
     ttl_trigger_blank: 3
@@ -55,8 +55,8 @@ preferences:
         units: deg
 stimuli:
     aperture_radius: 1
-    bar_blank_duration: 0.06666666666667
-    bar_blank_interval: 0.333333333333
+    bar_blank_duration: 0.0333333333333
+    bar_blank_interval: 0.1333333333333
     bar_directions:
     - -1
     - 0
@@ -72,22 +72,22 @@ stimuli:
     - 135
     - -1
     bar_refresh_times:
-    - 0.4
+    - 0.0666666666667
     bar_widths:
-    - 0.1
-    - 0.2
-    - 0.3
+    - 0.16666667
     bg_stim_h5file: toon_stims_512.h5
     bg_stim_refresh_time: 0.0666666666667
-    bg_stim_url: https://figshare.com/ndownloader/files/31165414
-    fix_color: 0.75
-    fix_radius: 8
-    inner_fix_linewidth: 4
-    instruction_text: "\u8BF7\u4E00\u76F4\u6CE8\u89C6\u5C4F\u5E55\u4E2D\u592E\uFF0C\
-        \u8FD9\u662F\u6700\u91CD\u8981\u7684"
+    bg_stim_url: https://figshare.com/ndownloader/files/44497559
+    fix_barrier_linewidth: 8
+    fix_color:
+    - 1
+    - -1
+    - 0
+    fix_radius: 3
+    inner_fix_linewidth: 2
+    instruction_text: Press a button whenever the fixation mark changes luminance
     outer_fix_linewidth: 1
-    pretrigger_text: "\"t\" \u5C06\u5F00\u59CB\u5B9E\u9A8C\u3002 \u62A5\u544A\u56FA\
-        \u5B9A\u5341\u5B57\u7684\u6240\u6709\u53D8\u5316"
+    pretrigger_text: ''
     refresh_rate: 120
     stim_size_pixels: 1080
 various:
@@ -100,7 +100,7 @@ various:
     text_height: 40
     text_position_x: 0
     text_position_y: 100
-    text_width: 300
+    text_width: 500
 window:
     color:
     - 0

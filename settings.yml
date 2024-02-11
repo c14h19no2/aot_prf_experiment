@@ -19,9 +19,10 @@ stimuli:
   instruction_text: 'Press a button whenever the fixation mark changes luminance'
   pretrigger_text: ''
   fix_radius: 3
-  fix_color: 0.25
-  inner_fix_linewidth: 4
-  outer_fix_linewidth: 2
+  fix_color: [1, -1, 0]
+  inner_fix_linewidth: 2
+  outer_fix_linewidth: 1
+  fix_barrier_linewidth: 8
   stim_size_pixels: 1080 # the full height of a HD screen, likely to be used
   aperture_radius: 1 # defined in fraction of stimulus radius
   refresh_rate: 120 # this is just a suggestion; the code doesn't depend on it
