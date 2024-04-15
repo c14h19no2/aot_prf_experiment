@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-from psychopy.visual import Line, Circle
+from psychopy.visual import Line, Circle, GratingStim
 
 
 class FixationLines(object):
@@ -39,7 +39,7 @@ class FixationLines(object):
 class FixationBullsEye(object):
 
     def __init__(
-        self, win, circle_radius, color, pos=[0, 0], edges=360, *args, **kwargs
+        self, win, circle_radius, color, pos=[0, 0], edges=360, dot_perimeter_size=None, dot_perimeter_smoothness=None, *args, **kwargs
     ):
         self.color = color
         self.line1 = Line(
@@ -64,6 +64,7 @@ class FixationBullsEye(object):
             edges=edges,
             fillColor=None,
             lineColor=self.color,
+            pos=pos,
             *args,
             **kwargs
         )
@@ -73,6 +74,7 @@ class FixationBullsEye(object):
             edges=edges,
             fillColor=None,
             lineColor=self.color,
+            pos=pos,
             *args,
             **kwargs
         )
@@ -82,6 +84,7 @@ class FixationBullsEye(object):
             edges=edges,
             fillColor=None,
             lineColor=self.color,
+            pos=pos,
             *args,
             **kwargs
         )
@@ -91,11 +94,21 @@ class FixationBullsEye(object):
             edges=edges,
             fillColor=None,
             lineColor=self.color,
+            pos=pos,
             *args,
             **kwargs
         )
+        self.surround_fixation_dot = GratingStim(
+            win,
+            pos=pos,
+            size=dot_perimeter_size,
+            contrast=0,
+            mask="raisedCos",
+            maskParams={"fringeWidth": dot_perimeter_smoothness},
+        )
 
     def draw(self):
+        self.surround_fixation_dot.draw()
         self.line1.draw()
         self.line2.draw()
         self.circle1.draw()

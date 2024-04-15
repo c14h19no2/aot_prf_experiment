@@ -14,7 +14,7 @@ from session import PRFBarPassSession
 parser = argparse.ArgumentParser(description='A Population Receptive Field experiment')
 parser.add_argument('subject', default=None, nargs='?', 
                     help='the subject of the experiment, as a zero-filled integer, such as 001, or 04.')
-parser.add_argument('run', default=0, type=int, nargs='?', 
+parser.add_argument('run', default=1, type=int, nargs='?', 
                     help='the run nr of the experimental run, an integer, such as 1, or 99.')
 parser.add_argument('eyelink', default=0, type=int, nargs='?')
 

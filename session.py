@@ -66,6 +66,15 @@ class PRFBarPassSession(PylinkEyetrackerSession):
                 self.settings["stimuli"].get("bg_stim_url"), stim_file_path
             )
 
+        #originalsize = self.settings["stimuli"].get("movie_size_pix")    
+        self.originalsize = self.settings["window"].get("size")
+        self.shrink_factor = self.settings["stimuli"].get("shrink_factor")
+        self.shiftedpos = (0, -self.originalsize[1]*(1-self.shrink_factor)/2)
+
+        if os.path.exists(self.settings["paths"].get("stimuli_path")):  
+            self.pix_per_deg = self.win.size[0] / self.win.monitor.getWidth()
+
+
         try:
             self.port = parallel.ParallelPort(address=0x0378)
             self.port.setData(0)
@@ -120,16 +129,24 @@ class PRFBarPassSession(PylinkEyetrackerSession):
 
         self.fixation = FixationBullsEye(
             win=self.win,
-            circle_radius=self.settings["stimuli"].get("stim_size_pixels"),
+            circle_radius=self.settings["stimuli"].get("stim_size_pixels")*self.shrink_factor,
             color=(0.5, 0.5, 0.5),
             **{"lineWidth": self.settings["stimuli"].get("outer_fix_linewidth")},
+            pos=self.shiftedpos,
+            dot_perimeter_size=self.settings["stimuli"].get(
+                "fix_perimeter_size")
+            * self.pix_per_deg,
+            dot_perimeter_smoothness=self.settings["stimuli"].get(
+                "fix_perimeter_smooth"
+            ),
         )
 
         self.report_fixation = FixationLines(
             win=self.win,
-            circle_radius=self.settings["stimuli"].get("fix_radius") * 2,
+            circle_radius=self.settings["stimuli"].get("fix_radius") * 2 * self.shrink_factor,
             color=self.settings["stimuli"].get("fix_color"),
             **{"lineWidth": self.settings["stimuli"].get("inner_fix_linewidth")},
+            pos=self.shiftedpos,
         )
 
         self.report_fixation_barrier = FixationLines(
@@ -137,6 +154,7 @@ class PRFBarPassSession(PylinkEyetrackerSession):
             circle_radius=self.settings["stimuli"].get("fix_radius") * 2,
             color=(0, 0, 0),
             **{"lineWidth": self.settings["stimuli"].get("fix_barrier_linewidth")},
+            pos=self.shiftedpos,
         )
 
         h5stimfile = h5py.File(
@@ -157,8 +175,9 @@ class PRFBarPassSession(PylinkEyetrackerSession):
                 units="pix",
                 texRes=self.bg_images.shape[1],
                 colorSpace="rgb",
-                size=self.settings["stimuli"].get("stim_size_pixels"),
+                size=self.settings["stimuli"].get("stim_size_pixels")*self.shrink_factor,######################
                 interpolate=True,
+                pos=self.shiftedpos,
             )
             for bg_img in self.bg_images
         ]
@@ -171,7 +190,8 @@ class PRFBarPassSession(PylinkEyetrackerSession):
             tex=np.ones((4, 4)),
             contrast=1,
             color=(0.0, 0.0, 0.0),
-            size=self.settings["stimuli"].get("stim_size_pixels"),
+            size=self.settings["stimuli"].get("stim_size_pixels")*self.shrink_factor,######################
+            pos=self.shiftedpos,
         )
         intromask.draw()
         self.win.flip()
