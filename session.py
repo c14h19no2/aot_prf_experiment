@@ -67,7 +67,7 @@ class PRFBarPassSession(PylinkEyetrackerSession):
             )
 
         #originalsize = self.settings["stimuli"].get("movie_size_pix")    
-        self.originalsize = self.settings["window"].get("size")
+        self.originalsize = self.settings["stimuli"].get("movie_size_pix")
         self.shrink_factor = self.settings["stimuli"].get("shrink_factor")
         self.shiftedpos = (0, -self.originalsize[1]*(1-self.shrink_factor)/2)
 
@@ -131,6 +131,8 @@ class PRFBarPassSession(PylinkEyetrackerSession):
             win=self.win,
             circle_radius=self.settings["stimuli"].get("stim_size_pixels")*self.shrink_factor,
             color=(0.5, 0.5, 0.5),
+            rect_width=self.originalsize[0] * self.shrink_factor,
+            rect_height=self.originalsize[1] * self.shrink_factor,
             **{"lineWidth": self.settings["stimuli"].get("outer_fix_linewidth")},
             pos=self.shiftedpos,
             dot_perimeter_size=self.settings["stimuli"].get(

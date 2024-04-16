@@ -35,8 +35,9 @@ stimuli:
   bar_blank_duration: 0.0333333333333
   bar_blank_interval: 0.1333333333333
   shrink_factor: 0.7
-  fix_perimeter_size: 0.625
+  fix_perimeter_size: 0.325
   fix_perimeter_smooth: 0.3
+  movie_size_pix: [1536,1080]
 
 design:
   offset_ifi_duration: 2.0

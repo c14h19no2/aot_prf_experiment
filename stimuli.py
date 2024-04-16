@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-from psychopy.visual import Line, Circle, GratingStim
+from psychopy.visual import Line, Circle, GratingStim, Rect
 
 
 class FixationLines(object):
@@ -39,7 +39,7 @@ class FixationLines(object):
 class FixationBullsEye(object):
 
     def __init__(
-        self, win, circle_radius, color, pos=[0, 0], edges=360, dot_perimeter_size=None, dot_perimeter_smoothness=None, *args, **kwargs
+        self, win, circle_radius, color, rect_width, rect_height, pos=[0, 0], edges=360, dot_perimeter_size=None, dot_perimeter_smoothness=None, *args, **kwargs
     ):
         self.color = color
         self.line1 = Line(
@@ -98,6 +98,7 @@ class FixationBullsEye(object):
             *args,
             **kwargs
         )
+
         self.surround_fixation_dot = GratingStim(
             win,
             pos=pos,
@@ -107,6 +108,18 @@ class FixationBullsEye(object):
             maskParams={"fringeWidth": dot_perimeter_smoothness},
         )
 
+        self.screen_rectangle = Rect(
+            win,
+            width=rect_width,
+            height=rect_height,
+            fillColor=None,
+            lineColor=self.color,
+            pos=pos,
+            *args,
+            **kwargs
+        )
+
+
     def draw(self):
         self.surround_fixation_dot.draw()
         self.line1.draw()
@@ -115,6 +128,7 @@ class FixationBullsEye(object):
         self.circle2.draw()
         self.circle3.draw()
         self.circle4.draw()
+        self.screen_rectangle.draw()
 
     def setColor(self, color):
         self.line1.color = color
@@ -123,4 +137,5 @@ class FixationBullsEye(object):
         self.circle2.color = color
         self.circle3.color = color
         self.circle4.color = color
+        self.screen_rectangle.color = color
         self.color = color
