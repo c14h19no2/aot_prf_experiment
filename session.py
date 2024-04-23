@@ -70,6 +70,9 @@ class PRFBarPassSession(PylinkEyetrackerSession):
         self.originalsize = self.settings["stimuli"].get("movie_size_pix")
         self.shrink_factor = self.settings["stimuli"].get("shrink_factor")
         self.shiftedpos = (0, -self.originalsize[1]*(1-self.shrink_factor)/2)
+        self.displaysize = [int(i*self.shrink_factor) for i in self.originalsize]
+        self.displaywidth = self.displaysize[0]
+        self.displayheight = self.displaysize[1]
 
         if os.path.exists(self.settings["paths"].get("stimuli_path")):  
             self.pix_per_deg = self.win.size[0] / self.win.monitor.getWidth()
@@ -153,7 +156,7 @@ class PRFBarPassSession(PylinkEyetrackerSession):
 
         self.report_fixation_barrier = FixationLines(
             win=self.win,
-            circle_radius=self.settings["stimuli"].get("fix_radius") * 2,
+            circle_radius=self.settings["stimuli"].get("fix_radius") * 2 * self.shrink_factor, #################
             color=(0, 0, 0),
             **{"lineWidth": self.settings["stimuli"].get("fix_barrier_linewidth")},
             pos=self.shiftedpos,
@@ -177,7 +180,8 @@ class PRFBarPassSession(PylinkEyetrackerSession):
                 units="pix",
                 texRes=self.bg_images.shape[1],
                 colorSpace="rgb",
-                size=self.settings["stimuli"].get("stim_size_pixels")*self.shrink_factor,######################
+                #size=[l*self.shrink_factor for l in self.settings["stimuli"].get("movie_size_pix")],######################
+                size = self.settings["stimuli"].get("stim_size_pixels"),
                 interpolate=True,
                 pos=self.shiftedpos,
             )
@@ -187,12 +191,13 @@ class PRFBarPassSession(PylinkEyetrackerSession):
         # draw all the bg stimuli once, before they are used in the trials
         for ibs in self.image_bg_stims:
             ibs.draw()
-        intromask = GratingStim(
+        intromask = GratingStim(         
             self.win,
             tex=np.ones((4, 4)),
             contrast=1,
             color=(0.0, 0.0, 0.0),
-            size=self.settings["stimuli"].get("stim_size_pixels")*self.shrink_factor,######################
+            #size=[l*self.shrink_factor for l in self.settings["stimuli"].get("movie_size_pix")],######################
+            size = self.settings["stimuli"].get("stim_size_pixels"),
             pos=self.shiftedpos,
         )
         intromask.draw()
@@ -250,25 +255,54 @@ class PRFBarPassSession(PylinkEyetrackerSession):
             [type]: [description]
         """
         # middle of bars
+        
+
+
         bar_step_positions = np.linspace(
             -bar_width - 1, 1 + bar_width, nr_bar_steps, endpoint=True
         )
+        
+
+   
+
 
         # circular aperture is there for everyone
+        
         X, Y = np.meshgrid(
             np.linspace(-1, 1, n_mask_pixels, endpoint=True),
-            np.linspace(-1, 1, n_mask_pixels, endpoint=True),
+            np.linspace(-1, 1, n_mask_pixels, endpoint=True), 
         )
+        
+        '''
+        X, Y = np.meshgrid(
+            np.linspace(-self.displaywidth/2, self.displayheight/2, n_mask_pixels, endpoint=True),
+            np.linspace(-self.displaywidth/2, self.displayheight/2, n_mask_pixels, endpoint=True),
+        )
+        '''
         ecc = np.sqrt(X**2 + Y**2)
-        circular_aperture = ecc < self.settings["stimuli"].get("aperture_radius")
+        #circular_aperture = ecc < self.settings["stimuli"].get("aperture_radius")
+        
 
-        # bar apertures
+        rectangular_aperture = np.logical_and(
+            np.abs(X) < self.displaywidth/2, np.abs(Y) < self.displayheight/500
+        )
+
+        
+
+
+
+
+
+        # bar apertures=
         X, Y = _rotate_origin_only(X, Y, np.deg2rad(bar_direction))
+        print(X.shape)
+        print(Y.shape)
 
         op_apertures = np.zeros([nr_bar_steps] + list(X.shape), dtype=bool)
         for i, bsp in enumerate(bar_step_positions):
             op_apertures[i] = (X > (bsp - bar_width)) & (X < (bsp + bar_width))
-            op_apertures[i] *= circular_aperture
+            #op_apertures[i] *= circular_aperture
+            #op_apertures[i] *= rectangular_aperture
 
         return op_apertures
 
