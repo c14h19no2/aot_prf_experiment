@@ -283,8 +283,10 @@ class PRFBarPassSession(PylinkEyetrackerSession):
         #circular_aperture = ecc < self.settings["stimuli"].get("aperture_radius")
         
 
+
         rectangular_aperture = np.logical_and(
-            np.abs(X) < self.displaywidth/2, np.abs(Y) < self.displayheight/500
+            np.abs(X) < 1, np.abs(Y) < self.originalsize[1]/self.originalsize[0] #1080/1536
+            
         )
 
         
@@ -293,7 +295,7 @@ class PRFBarPassSession(PylinkEyetrackerSession):
 
 
 
-        # bar apertures=
+        # bar apertures=s
         X, Y = _rotate_origin_only(X, Y, np.deg2rad(bar_direction))
         print(X.shape)
         print(Y.shape)
@@ -302,7 +304,7 @@ class PRFBarPassSession(PylinkEyetrackerSession):
         for i, bsp in enumerate(bar_step_positions):
             op_apertures[i] = (X > (bsp - bar_width)) & (X < (bsp + bar_width))
             #op_apertures[i] *= circular_aperture
-            #op_apertures[i] *= rectangular_aperture
+            op_apertures[i] *= rectangular_aperture
 
         return op_apertures
 

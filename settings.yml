@@ -31,9 +31,9 @@ stimuli:
   bg_stim_refresh_time: 0.0666666666667 # in s, 15Hz
   bar_refresh_times: [0.0666666666667] # in s, should be acquisition TR for a standard stepping bar design, Dumoulin-style
   #bar_directions: [-1, 225, 315, -1, 45, 135, -1, -1, 135, 45, -1, 315, 225, -1]
-  #add 45 to all directions to make it consistent with the bar direction in the stimuli
-  #bar_directions: [44, 270, 360, 44, 90, 180, 44, 44, 180, 90, 44, 360, 270, 44]
-  bar_directions: [0, 90, 180, 0, 270, 180, 0, 0, 180, 270, 0, 180, 90, 0]
+  #add 45 to all directions to make it consistent with the bar direction in the stimuli except -1 which is the blank
+  bar_directions: [270, 0, -1, 90, 180, -1, -1, 180, 90, -1, 0, 270]
+
   bar_widths: [0.16666667] # relative to total bg stimulus size, [0.125] would be a 'standard' Dumoulin-style pRF design
   bar_blank_duration: 0.0333333333333
   bar_blank_interval: 0.1333333333333
@@ -47,8 +47,8 @@ design:
   minimal_ifi_duration: 2.0
   gaussian_ifi_sd: 0
   exponential_ifi_mean: 2.5
-  start_duration: 4.0 # 24 for a standard Dumoulin-style pRF design fMRI experiment
-  end_duration: 4.0 # 24 for a standard Dumoulin-style pRF design fMRI experiment
+  start_duration: 24.0 # 24 for a standard Dumoulin-style pRF design fMRI experiment
+  end_duration: 24.0 # 24 for a standard Dumoulin-style pRF design fMRI experiment
   bar_duration: 24.0 # 30 for a standard Dumoulin-style pRF design fMRI experiment
   blank_duration: 16.0 # 16 for a standard Dumoulin-style pRF design fMRI experiment
   ttl_trigger_delay: 0.001 # delay after setting parallel port status for triggers
