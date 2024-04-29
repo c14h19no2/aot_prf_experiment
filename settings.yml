@@ -34,8 +34,6 @@ stimuli:
   #add 45 to all directions to make it consistent with the bar direction in the stimuli except -1 which is the blank
   bar_directions: [270, 0, -1, 90, 180, -1, -1, 180, 90, -1, 0, 270]
 
-  #add 45 to all directions to make it consistent with the bar direction in the stimuli excepet the -1 which is the blank, keep it as -1
-  bar_directions: [-1, 270, 0, -1, 90, 180, -1, -1, 180, 90, -1, 0, 270, -1]
   
   bar_widths: [0.16666667] # relative to total bg stimulus size, [0.125] would be a 'standard' Dumoulin-style pRF design
   bar_blank_duration: 0.0333333333333
