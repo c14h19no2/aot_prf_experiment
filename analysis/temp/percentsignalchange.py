@@ -12,7 +12,7 @@ from nilearn.glm.first_level.design_matrix import _cosine_drift
 import nibabel as nib
 blank_TRs = 24
 
-psc_savefolder = "/tank/shared/2024/visual/AOT/temp/prftest/psc"
+psc_savefolder = "/tank/shared/2024/visual/AOT/temp/prftest/new_psc"
 
 def psc(file):
     """
@@ -56,4 +56,4 @@ def psc_on_folder(folder):
 
 
 if __name__ == "__main__":
-    psc_on_folder("/tank/shared/2024/visual/AOT/temp/prftest/filtering")
+    psc_on_folder("/tank/shared/2024/visual/AOT/temp/prftest/new_filtering")

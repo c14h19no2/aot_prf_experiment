@@ -84,28 +84,28 @@ def filter_on_file(sub,run):
     subtag = f"sub-{sub:03d}"
     run = str(run)
     # load the functional data
-    func_file = f"/tank/shared/2024/visual/AOT/derivatives/fmripreps/aotfull_preprocs/fullpreproc_forcesyn/{subtag}/ses-pRF/func/{subtag}_ses-pRF_task-pRF_rec-nordicstc_run-{run}_space-T1w_desc-preproc_part-mag_bold.nii.gz"
+    func_file = f"/tank/shared/2024/visual/AOT/derivatives/fmripreps/aotfull_preprocs/fullpreproc_forcesyn_endfix/{subtag}/ses-pRF/func/{subtag}_ses-pRF_task-pRF_rec-nordicstc_run-{run}_space-T1w_desc-preproc_part-mag_bold.nii.gz"
     func = nib.load(func_file).get_fdata()
     print(func.shape)
 
     # filter the data
-    filtered_data, hp_set = highpass_dct(func, lb=0.01, TR=0.9)
+    filtered_data, hp_set = highpass_dct(func, lb=0.0033, TR=0.9)
     print(filtered_data.shape)
     print(hp_set.shape)
 
     # save the filtered data 
     filtered_img = nib.Nifti1Image(filtered_data, nib.load(func_file).affine, nib.load(func_file).header)
-    nib.save(filtered_img, f"/tank/shared/2024/visual/AOT/temp/prftest/filtering/{subtag}_ses_pRF_run-{run.zfill(2)}_filtered_func.nii.gz")
+    nib.save(filtered_img, f"/tank/shared/2024/visual/AOT/temp/prftest/new_filtering/{subtag}_ses_pRF_run-{run.zfill(2)}_filtered_func.nii.gz")
 
     return
 
 
 if __name__ == "__main__":
-    #filter_on_file(2,1)
-    #filter_on_file(2,2)
-    #filter_on_file(2,3)
-    #filter_on_file(2,4)
-    #filter_on_file(2,5)
+    filter_on_file(2,1)
+    filter_on_file(2,2)
+    filter_on_file(2,3)
+    filter_on_file(2,4)
+    filter_on_file(2,5)
     filter_on_file(2,6)
     filter_on_file(2,7)
     filter_on_file(2,8)

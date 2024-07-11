@@ -10,8 +10,8 @@ from nilearn.glm.first_level.design_matrix import _cosine_drift
 
 import nibabel as nib
 
-psc_savefolder = "/tank/shared/2024/visual/AOT/temp/prftest/psc"
-psc_average_folder = "/tank/shared/2024/visual/AOT/temp/prftest/psc_average"
+psc_savefolder = "/tank/shared/2024/visual/AOT/temp/prftest/new_psc"
+psc_average_folder = "/tank/shared/2024/visual/AOT/temp/prftest/new_psc_average"
 
 def average_on_psc_folder(folder):
     """
