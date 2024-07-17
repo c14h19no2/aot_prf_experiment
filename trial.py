@@ -222,7 +222,7 @@ class EmptyBarPassTrial(Trial):
 
     def draw(self):
         total_display_time = getTime() - self.session.experiment_start_time
-        trial_display_time = total_display_time - self.parameters["start_time"]
+        #trial_display_time = total_display_time - self.parameters["start_time"]
 
         if (
             total_display_time

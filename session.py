@@ -117,9 +117,13 @@ class PRFBarPassSession(PylinkEyetrackerSession):
             "design"
         ].get("minimal_ifi_duration")
 
+        '''
         self.fix_event_times = np.cumsum(self.fix_event_durations) + self.settings[
             "design"
         ].get("start_duration")
+        '''
+        self.fix_event_times = np.cumsum(self.fix_event_durations) 
+
         self.stimulus_changed = False
         self.last_fix_event = 0
         # np.savetxt(os.path.join(self.output_dir, self.output_str + '_fix_events.tsv'), self.fix_event_times, delimiter='\t')
@@ -353,14 +357,26 @@ class PRFBarPassSession(PylinkEyetrackerSession):
             keys=["space"],
             draw_each_frame=False,
         )
-
-        dummy_trial = DummyWaiterTrial(
+        
+        
+        dummy_trial_trigger = DummyWaiterTrial(
             session=self,
             trial_nr=1,
-            phase_durations=[np.inf, self.settings["design"].get("start_duration")],
+            phase_durations=[np.inf,0],#, [np.inf,self.settings["design"].get("start_duration")],
             txt=self.settings["stimuli"].get("pretrigger_text"),
             draw_each_frame=False,
         )
+        
+        dummy_trial_blank = EmptyBarPassTrial(
+                                session=self,
+                                trial_nr=1,
+                                phase_durations=[self.settings["design"].get("start_duration")],
+                                phase_names=["stim"],
+                                #parameters=parameters,
+                                timing="seconds",
+                                verbose=True,
+                                draw_each_frame=False,
+                            )
 
         bar_directions = np.array(self.settings["stimuli"].get("bar_directions"))
         bar_widths = np.array(self.settings["stimuli"].get("bar_widths"))
@@ -373,7 +389,7 @@ class PRFBarPassSession(PylinkEyetrackerSession):
         np.random.shuffle(bar_par_order)
         bar_par_counter = 0
 
-        self.trials = [instruction_trial, dummy_trial]
+        self.trials = [instruction_trial, dummy_trial_trigger, dummy_trial_blank]
         trial_counter = 2
         start_time = self.settings["design"].get("start_duration")
         for i in range(len(bar_widths)):
@@ -441,6 +457,7 @@ class PRFBarPassSession(PylinkEyetrackerSession):
                     start_time = start_time + phase_durations[0]
                 bar_par_counter = bar_par_counter + 1
 
+        '''
         outro_trial = OutroTrial(
             session=self,
             trial_nr=trial_counter,
@@ -448,6 +465,17 @@ class PRFBarPassSession(PylinkEyetrackerSession):
             txt="",
             draw_each_frame=False,
         )
+        '''
+        outro_trial = EmptyBarPassTrial(
+                                session=self,
+                                trial_nr=trial_counter,
+                                phase_durations=[self.settings["design"].get("end_duration")],
+                                phase_names=["stim"],
+                                #parameters=parameters, 
+                                timing="seconds",
+                                verbose=True,
+                                draw_each_frame=False,
+                            )
 
         self.trials.append(outro_trial)
         self.total_time = start_time + self.settings["design"].get("end_duration")
