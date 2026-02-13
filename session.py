@@ -54,6 +54,21 @@ class PRFBarPassSession(PylinkEyetrackerSession):
             settings_file=settings_file,
             eyetracker_on=eyetracker_on,
         )  # initialize parent class!
+
+        self.save_screenshot = bool(
+            self.settings.get("various", {}).get("save_screenshot", False)
+        )
+        self.screenshot_rate_hz = float(
+            self.settings.get("various", {}).get("screenshot_rate_hz", 15.0)
+        )
+        self.screenshot_interval = 1.0 / self.screenshot_rate_hz
+        self.screenshot_frame_idx = 0
+        self.next_screenshot_time = None
+        self.screenshot_dir = os.path.join(
+            self.output_dir, f"{self.output_str}_screenshots"
+        )
+        if self.save_screenshot and not os.path.isdir(self.screenshot_dir):
+            os.makedirs(self.screenshot_dir, exist_ok=True)
         # stimulus materials
         stim_file_path = os.path.join(
             os.path.split(__file__)[0],
@@ -116,12 +131,12 @@ class PRFBarPassSession(PylinkEyetrackerSession):
             "design"
         ].get("minimal_ifi_duration")
 
-        '''
+        """
         self.fix_event_times = np.cumsum(self.fix_event_durations) + self.settings[
             "design"
         ].get("start_duration")
-        '''
-        self.fix_event_times = np.cumsum(self.fix_event_durations) 
+        """
+        self.fix_event_times = np.cumsum(self.fix_event_durations)
 
         self.stimulus_changed = False
         self.last_fix_event = 0
@@ -346,26 +361,28 @@ class PRFBarPassSession(PylinkEyetrackerSession):
             keys=["space"],
             draw_each_frame=False,
         )
-        
-        
+
         dummy_trial_trigger = DummyWaiterTrial(
             session=self,
             trial_nr=1,
-            phase_durations=[np.inf,0],#, [np.inf,self.settings["design"].get("start_duration")],
+            phase_durations=[
+                np.inf,
+                0,
+            ],  # , [np.inf,self.settings["design"].get("start_duration")],
             txt=self.settings["stimuli"].get("pretrigger_text"),
             draw_each_frame=False,
         )
-        
+
         dummy_trial_blank = EmptyBarPassTrial(
-                                session=self,
-                                trial_nr=1,
-                                phase_durations=[self.settings["design"].get("start_duration")],
-                                phase_names=["stim"],
-                                #parameters=parameters,
-                                timing="seconds",
-                                verbose=True,
-                                draw_each_frame=False,
-                            )
+            session=self,
+            trial_nr=1,
+            phase_durations=[self.settings["design"].get("start_duration")],
+            phase_names=["stim"],
+            # parameters=parameters,
+            timing="seconds",
+            verbose=True,
+            draw_each_frame=False,
+        )
 
         bar_directions = np.array(self.settings["stimuli"].get("bar_directions"))
         bar_widths = np.array(self.settings["stimuli"].get("bar_widths"))
@@ -446,7 +463,7 @@ class PRFBarPassSession(PylinkEyetrackerSession):
                     start_time = start_time + phase_durations[0]
                 bar_par_counter = bar_par_counter + 1
 
-        '''
+        """
         outro_trial = OutroTrial(
             session=self,
             trial_nr=trial_counter,
@@ -454,23 +471,44 @@ class PRFBarPassSession(PylinkEyetrackerSession):
             txt="",
             draw_each_frame=False,
         )
-        '''
+        """
         outro_trial = EmptyBarPassTrial(
-                                session=self,
-                                trial_nr=trial_counter,
-                                phase_durations=[self.settings["design"].get("end_duration")],
-                                phase_names=["stim"],
-                                #parameters=parameters, 
-                                timing="seconds",
-                                verbose=True,
-                                draw_each_frame=False,
-                            )
+            session=self,
+            trial_nr=trial_counter,
+            phase_durations=[self.settings["design"].get("end_duration")],
+            phase_names=["stim"],
+            # parameters=parameters,
+            timing="seconds",
+            verbose=True,
+            draw_each_frame=False,
+        )
 
         self.trials.append(outro_trial)
         self.total_time = start_time + self.settings["design"].get("end_duration")
 
     def create_trial(self):
         pass
+
+    def capture_screenshot(self):
+        if not self.save_screenshot:
+            return
+
+        if not hasattr(self, "experiment_start_time"):
+            return
+
+        now = getTime() - self.experiment_start_time
+        if now < 0:
+            return
+
+        if self.next_screenshot_time is None:
+            self.next_screenshot_time = 0.0
+
+        if now < self.next_screenshot_time:
+            return
+
+        self.win.getMovieFrame(buffer="front")
+        self.screenshot_frame_idx += 1
+        self.next_screenshot_time += self.screenshot_interval
 
     def run(self):
         """Runs experiment."""
@@ -489,6 +527,12 @@ class PRFBarPassSession(PylinkEyetrackerSession):
         self.close()
 
     def close(self):
+        if self.save_screenshot and self.screenshot_frame_idx > 0:
+            frame_stub = os.path.join(
+                self.screenshot_dir, f"{self.output_str}_frame.png"
+            )
+            self.win.saveMovieFrames(frame_stub)
+
         h5_seq_file = os.path.join(self.output_dir, self.output_str + "_seq_timing.h5")
         for trial in self.trials:
             if type(trial) == BarPassTrial:

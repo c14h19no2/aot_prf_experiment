@@ -66,6 +66,8 @@ various:
   text_position_x: 0
   text_position_y: 100
   buttons: ['b', 'j', 'k', 'l', 'semicolon']
+  save_screenshot: True
+  screenshot_rate_hz: 15
 
 paths:
   stimuli_path: "/Users/shufanzhang/AOT_stimuli/rescaled_final"

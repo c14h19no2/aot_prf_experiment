@@ -187,6 +187,7 @@ class BarPassTrial(Trial):
             self.session.fixation.draw()
             self.session.report_fixation.draw()
             self.session.win.flip()
+            self.session.capture_screenshot()
 
     def get_events(self):
         events = super().get_events()
@@ -222,7 +223,7 @@ class EmptyBarPassTrial(Trial):
 
     def draw(self):
         total_display_time = getTime() - self.session.experiment_start_time
-        #trial_display_time = total_display_time - self.parameters["start_time"]
+        # trial_display_time = total_display_time - self.parameters["start_time"]
 
         if (
             total_display_time
@@ -237,6 +238,7 @@ class EmptyBarPassTrial(Trial):
         self.session.fixation.draw()
         self.session.report_fixation.draw()
         self.session.win.flip()
+        self.session.capture_screenshot()
 
     def run(self):
 
@@ -318,6 +320,7 @@ class InstructionTrial(Trial):
         self.session.report_fixation.draw()
         self.text.draw()
         self.session.win.flip()
+        self.session.capture_screenshot()
 
     def get_events(self):
         events = super().get_events()
