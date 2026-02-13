@@ -9,6 +9,7 @@ import time
 
 # import pylink
 import numpy as np
+from PIL import Image
 from psychopy import logging
 import scipy.stats as ss
 from psychopy.visual import GratingStim
@@ -60,6 +61,9 @@ class PRFBarPassSession(PylinkEyetrackerSession):
         )
         self.screenshot_rate_hz = float(
             self.settings.get("various", {}).get("screenshot_rate_hz", 15.0)
+        )
+        self.screenshot_downscale = int(
+            self.settings.get("various", {}).get("screenshot_downscale", 1)
         )
         self.screenshot_interval = 1.0 / self.screenshot_rate_hz
         self.screenshot_frame_idx = 0
@@ -507,6 +511,13 @@ class PRFBarPassSession(PylinkEyetrackerSession):
             return
 
         self.win.getMovieFrame(buffer="front")
+        if self.screenshot_downscale > 1 and self.win.movieFrames:
+            frame = self.win.movieFrames[-1]
+            size = (
+                frame.size[0] // self.screenshot_downscale,
+                frame.size[1] // self.screenshot_downscale,
+            )
+            self.win.movieFrames[-1] = frame.resize(size, resample=Image.BILINEAR)
         self.screenshot_frame_idx += 1
         self.next_screenshot_time += self.screenshot_interval
 

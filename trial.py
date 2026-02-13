@@ -183,9 +183,9 @@ class BarPassTrial(Trial):
                 which_bg_stim.mask = (mask * 2) - 1
                 which_bg_stim.draw()
 
-            self.session.report_fixation_barrier.draw()
+            # self.session.report_fixation_barrier.draw()
             self.session.fixation.draw()
-            self.session.report_fixation.draw()
+            # self.session.report_fixation.draw()
             self.session.win.flip()
             self.session.capture_screenshot()
 
@@ -315,9 +315,9 @@ class InstructionTrial(Trial):
 
     def draw(self):
 
-        self.session.report_fixation_barrier.draw()
+        # self.session.report_fixation_barrier.draw()
         self.session.fixation.draw()
-        self.session.report_fixation.draw()
+        # self.session.report_fixation.draw()
         self.text.draw()
         self.session.win.flip()
         self.session.capture_screenshot()
