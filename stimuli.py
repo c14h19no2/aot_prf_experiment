@@ -121,21 +121,21 @@ class FixationBullsEye(object):
 
 
     def draw(self):
-        self.surround_fixation_dot.draw()
-        self.line1.draw()
-        self.line2.draw()
-        self.circle1.draw()
-        self.circle2.draw()
-        self.circle3.draw()
-        self.circle4.draw()
+        # self.surround_fixation_dot.draw()
+        # self.line1.draw()
+        # self.line2.draw()
+        # self.circle1.draw()
+        # self.circle2.draw()
+        # self.circle3.draw()
+        # self.circle4.draw()
         self.screen_rectangle.draw()
 
     def setColor(self, color):
-        self.line1.color = color
-        self.line2.color = color
-        self.circle1.color = color
-        self.circle2.color = color
-        self.circle3.color = color
-        self.circle4.color = color
+        # self.line1.color = color
+        # self.line2.color = color
+        # self.circle1.color = color
+        # self.circle2.color = color
+        # self.circle3.color = color
+        # self.circle4.color = color
         self.screen_rectangle.color = color
-        self.color = color
+        # self.color = color

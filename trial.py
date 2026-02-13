@@ -234,9 +234,9 @@ class EmptyBarPassTrial(Trial):
                 np.ones((1, 3)) * -1 * self.session.report_fixation.color
             )
 
-        self.session.report_fixation_barrier.draw()
+        # self.session.report_fixation_barrier.draw()
         self.session.fixation.draw()
-        self.session.report_fixation.draw()
+        # self.session.report_fixation.draw()
         self.session.win.flip()
         self.session.capture_screenshot()
 
